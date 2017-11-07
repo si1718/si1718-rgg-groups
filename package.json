@@ -1,0 +1,19 @@
+{
+  "name": "si1718-rgg-groups",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/si1718/si1718-rgg-groups.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/si1718/si1718-rgg-groups/issues"
+  },
+  "homepage": "https://github.com/si1718/si1718-rgg-groups#readme"
+}
