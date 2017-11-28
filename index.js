@@ -2,10 +2,13 @@ var express = require('express');
 var bodyParser = require("body-parser"); // Convert code js to json
 var MongoClient = require("mongodb").MongoClient; // Access module to mongodb instantiated and client created
 var ObjectID = require("mongodb").ObjectID;
+var path = require('path');
 
-var mongodbURL = "mongodb://rafagroups:rafagroupspass@ds159845.mlab.com:59845/si1718-rgg-groups";
+var mongodbURL = "mongodb://rafar:rafar@ds159845.mlab.com:59845/si1718-rgg-groups";
 
 var app = express();
+
+app.use(express.static(path.join(__dirname, "public"))); // public is static
 
 app.use(bodyParser.json()); // Use json middleware form the body-parser module
 
@@ -22,7 +25,7 @@ MongoClient.connect(mongodbURL, {native_parser:true}, (err, database) => {
 
 
 // Function that checks all post errors
-function validationPost(res, groups, idLetters, idG, phone, components){
+function validationPost(res, groups, idLetters, idG, phone){
     var existingIdGroup = groups.filter((g) => {
         return (g.idGroup == idG);
     });
@@ -60,20 +63,7 @@ function validationPost(res, groups, idLetters, idG, phone, components){
                     res.sendStatus(400);
                 }
                 else{ // Phone is correct
-                    var telephone1;
-                    var si = 1;
-                    for (var i = 0; i < components.length; i++){
-                        if (components[i].length == 2){
-                            telephone1 = components[i][1].substr(10, components[i][1].length);
-                            
-                            if (isNaN(telephone1) || telephone1.length != 9) {
-                                console.log("WARNING: New POST to /groups with a component whose phone number is incorrect");
-                                res.sendStatus(400);
-                                si = 0;
-                            }
-                        }
-                    }
-                    if (si == 1){ return 1; }
+                    return 1;
                 }
             }
         }
@@ -155,6 +145,71 @@ app.post(baseURL + '/groups/*', function (req, res) {
     console.log("WARNING: New POST to /groups/*, this method is not allowed");
     res.sendStatus(405);
 })
+
+
+/*Get url params*/
+app.get(baseURL + "/departments/search", function (request, response) {
+    
+    let request_area = request.query.scientificTechnicalArea;
+    let request_name = request.query.name;
+    let request_groupid = request.query.idGroup;
+    let request_leader = request.query.leader;
+    let request_phone = request.query.phone;
+    let request_components = request.query.components;
+    let request_linesOfInvestigation = request.query.linesOfInvestigation;
+    let request_groupActivity = request.query['groupActivity-SICcodes'];
+    let request_generatedTechnology = request.query['generatedTechnology-SICcodes'];
+    let req_web = request.query.web;
+    var db_query = {"$and": []};
+
+    if(request_area){
+        db_query.$and.push({"area" : {$regex : ".*"+ request_area +".*"}});
+    }
+    if(request_name){
+        db_query.$and.push({"address": {$elemMatch: {"name": {$regex: ".*"+ request_name +".*"}}}});
+    }
+    if(request_groupid){
+        db_query.$and.push({"address": {$elemMatch: {"idGroup": {$regex: ".*"+ request_groupid +".*"}}}});
+    }
+    if(request_leader){
+        db_query.$and.push({"address": {$elemMatch: {"leader": {$regex: ".*"+ request_leader +".*"}}}});
+    }
+    if(request_phone){
+        db_query.$and.push({"address": {$elemMatch: {"phone": {$regex: ".*"+ request_phone +".*"}}}});
+    }
+    if(request_components){
+        db_query.$and.push({"components": {$elemMatch: {"name": {$regex: ".*"+ request_components +".*"}}}});
+        //db_query.$and.push({"researchers": {$elemMatch: {".*": {$regex: ".*"+req_researcher+".*"}}}});
+    }
+    if(request_linesOfInvestigation){
+        db_query.$and.push({"linesOfInvestigation": {$elemMatch: {"name": {$regex: ".*"+ request_linesOfInvestigation +".*"}}}});
+        //db_query.$and.push({"researchers": {$elemMatch: {".*": {$regex: ".*"+req_researcher+".*"}}}});
+    }
+    if(request_groupActivity){
+        db_query.$and.push({"groupActivity-SICcodes": {$elemMatch: {"name": {$regex: ".*"+ request_groupActivity +".*"}}}});
+        //db_query.$and.push({"researchers": {$elemMatch: {".*": {$regex: ".*"+req_researcher+".*"}}}});
+    }
+    if(request_generatedTechnology){
+        db_query.$and.push({"generatedTechnology-SICcodes": {$elemMatch: {"name": {$regex: ".*"+ request_generatedTechnology +".*"}}}});
+        //db_query.$and.push({"researchers": {$elemMatch: {".*": {$regex: ".*"+req_researcher+".*"}}}});
+    }
+
+    console.log(db_query);
+    /*else{
+        db_query = {"researcher" : [{$regex : ".*"+req_researcher+".*"}]};
+        db_query =  {"researchers": {$elemMatch: {"school": {$regex: ".*"+req_school+".*"}}}}
+    }*/
+
+    db.find(db_query).toArray( function (err, groups) {
+        
+        if (err) {
+            response.sendStatus(500);
+            console.log("WARNING: Internal Server error");// internal server error
+        } else {
+            response.send(groups);
+        }
+    });
+});
 
 
 // GET an existing group knowing the group id
@@ -240,27 +295,27 @@ app.get(baseURL + '/groups1/:area', function (req, res) {
 })
 
 
-// Get existing groups knowing the responsible
-app.get(baseURL + '/groups2/:responsible', function (req, res) {
+// Get existing groups knowing the leader
+app.get(baseURL + '/groups2/:leader', function (req, res) {
     db.find({}).toArray((err, groups) => { // Return an array which contains all contacts
         if (groups.length >= 1) {
-            var responsible = req.params.responsible;
+            var leader = req.params.leader;
             
-            for (var i = 0; i < responsible.length; i++)
-                responsible = responsible.replace("-", " ");
+            for (var i = 0; i < leader.length; i++)
+                leader = leader.replace("-", " ");
             
-            responsible = getOriginalString(responsible);
+            leader = getOriginalString(leader);
             
             var filteredGroups = groups.filter((r) => {
-                return (r.responsible == responsible);
+                return (r.leader == leader);
             });
             
             if (filteredGroups.length >= 1) {
                 res.send(filteredGroups);
-                console.log("INFO: The groups whose responsible was " + responsible + " have been shown");
+                console.log("INFO: The groups whose leader was " + leader + " have been shown");
             }
             else{
-                console.log("WARNING: New GET to /groups2/:responsible and the responsible was not found in the database");
+                console.log("WARNING: New GET to /groups2/:leader and the leader was not found in the database");
                 res.sendStatus(404);
             }
         }
@@ -269,7 +324,7 @@ app.get(baseURL + '/groups2/:responsible', function (req, res) {
             res.sendStatus(500);
         }
         else{
-            console.log("WARNING: New GET to /groups2/:responsible with nonexistent groups in the database");
+            console.log("WARNING: New GET to /groups2/:leader with nonexistent groups in the database");
             res.sendStatus(404);
         }
     });
@@ -277,7 +332,7 @@ app.get(baseURL + '/groups2/:responsible', function (req, res) {
 
 
 // Function that checks all update errors
-function validationUpdate(res, idLetters, phone, components){
+function validationUpdate(res, idLetters, phone){
     var letters = 0;
         
     for (var i = 0; i < idLetters.length; i++) {
@@ -296,23 +351,7 @@ function validationUpdate(res, idLetters, phone, components){
             res.sendStatus(400);
         }
         else{ // Phone is correct
-            //Components phone validation
-            var telephone1;
-            var si = 1;
-            for (var i = 0; i < components.length; i++){
-                if (components[i].length >= 2){
-                    for (var j = 1; j < components[i].length; j++) {
-                        telephone1 = components[i][j].substr(10, components[i][j].length);
-                        
-                        if (isNaN(telephone1) || telephone1.length != 9) {
-                            console.log("WARNING: New PUT to /groups/:idGroup with a component whose phone number is incorrect");
-                            res.sendStatus(400);
-                        si = 0;
-                        }
-                    }
-                }
-            }
-            if (si == 1){ return 1; }
+            return 1;
         }
     }
 }
@@ -325,19 +364,17 @@ app.put(baseURL + '/groups/:idGroup', function (req, res) { //NO TERMINADO
             var updateGroup = req.body; // Data updated by the user
             var idG = req.params.idGroup.toLowerCase();
             
-            updateGroup.idGroup = updateGroup.idGroup.toLowerCase();
+            updateGroup.idGroup = idG;
             
             db.find({"idGroup": idG}).toArray((err, group) => {
                 var existingGroupWithId = group;
                 
                 if (existingGroupWithId.length >= 1) { // Group whose datas will be changed
-                    if (updateGroup.idGroup.toLowerCase() == idG) { // The same ids
+                    if (updateGroup.idGroup == idG) { // The same ids
                         var iniciales = updateGroup.scientificTechnicalArea.substr(updateGroup.scientificTechnicalArea.length-3, 3).toLowerCase();
-                        //var id = updateGroup.idGroup.toLowerCase();
                         var telephone = updateGroup.phone;
-                        var components = updateGroup.components;
                         
-                        if (validationUpdate(res, iniciales, telephone, components) == 1) {
+                        if (validationUpdate(res, iniciales, telephone) == 1) {
                             if (updateGroup._id && ( typeof(updateGroup._id) === 'string')) // transformation of the _id
                                 updateGroup._id = ObjectID.createFromHexString(updateGroup._id);
                             

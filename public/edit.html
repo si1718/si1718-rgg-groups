@@ -1,0 +1,86 @@
+<h2>Edit group : {{groupId}}</h2>
+<br>
+
+<div class="table-responsive">
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th> Area </th> </thead>
+        <tbody>
+            <tr> <td> <input type="text" class="form-control" id="area" ng-model="updatedGroup.scientificTechnicalArea"
+                             value="{{updatedGroup.scientificTechnicalArea}}"/> </td> </tr>
+            <!---<tr><td><textarea class="form-control" id="area" ng-model="updatedGroup.scientificTechnicalArea"
+                    rows="1" value="{{updatedGroup.scientificTechnicalArea}}"></textarea></td></tr>--->
+        </tbody>
+    </table>
+    
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Name</th> </thead>
+        <tbody>
+            <tr> <td> <input type="text" class="form-control" id="name" ng-model="updatedGroup.name"
+                             value="{{updatedGroup.name}}"/> </td> </tr>
+            <!---<tr><td><textarea class="form-control" id="name" ng-model="updatedGroup.name"
+                    rows="1" value="{{updatedGroup.name}}"></textarea></td></tr>--->
+        </tbody>
+    </table>
+    
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Group Id</th> </thead>
+        <tbody> <tr> <td>{{updatedGroup.idGroup}}</td> </tr> </tbody>
+    </table>
+    
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead><tr><th>Leader</th></tr></thead>
+        <tbody>
+            <tr> <td> <input type="text" class="form-control" id="leader" ng-model="updatedGroup.leader"
+                             value="{{updatedGroup.leader}}"/> </td> </tr>
+            <!---<tr><td><textarea class="form-control" id="leader" ng-model="updatedGroup.leader"
+                    rows="1" value="{{updatedGroup.leader}}"></textarea></td></tr>--->
+        </tbody>
+    </table>
+    
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Phone</th> </thead>
+        <tbody>
+            <tr> <td> <input type="text" class="form-control" id="phone" ng-model="updatedGroup.phone"
+                             value="{{updatedGroup.phone}}"/> </td> </tr>
+            <!---<tr><td><textarea class="form-control" id="phone" ng-model="updatedGroup.phone"
+                    rows="1" value="{{updatedGroup.phone}}"></textarea></td></tr>--->
+        </tbody>
+    </table>
+    
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Components</th> </thead>
+        <tbody>
+            <tr> <td> <textarea class="form-control" id="components" ng-model="updatedGroup.components"
+                    rows="3" value="{{updatedGroup.components}}"></textarea> </td> </tr>
+        </tbody>
+    </table>
+    
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Lines Of Investigation</th> </thead>
+        <tbody>
+            <tr> <td> <textarea class="form-control" id="linesOfInvestigation" ng-model="updatedGroup.linesOfInvestigation"
+                    rows="3" value="{{updatedGroup.linesOfInvestigation}}"></textarea> </td> </tr>
+        </tbody>
+    </table>
+    
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Group Activity</th> </thead>
+        <tbody>
+            <tr> <td> <textarea class="form-control" id="groupActivity" ng-model="updatedGroup['groupActivity-SICcodes']"
+                    rows="3" value="{{updatedGroup['groupActivity-SICcodes']}}"></textarea> </td> </tr>
+        </tbody>
+    </table>
+    
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Generated Technology</th> </thead>
+        <tbody>
+            <tr> <td> <textarea class="form-control" id="generatedTechnology" ng-model="updatedGroup['generatedTechnology-SICcodes']"
+                    rows="3" value="{{updatedGroup['generatedTechnology-SICcodes']}}"></textarea> </td> </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <button class="btn btn-success" ng-click="editGroup()">Update</button>
+    <button class="btn btn-info" onclick="location.href='#!';">Back</button>
+</div>

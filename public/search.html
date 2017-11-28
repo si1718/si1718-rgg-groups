@@ -1,0 +1,163 @@
+<h2>Search of groups</h2>
+
+<form class="form-horizontal">
+    <fieldset>
+        <div class="form-group">
+          <label class="col-md-4 control-label">Area</label>  
+          <div class="col-md-4">
+          <input ng-model="search.area" id="area" name="area" type="text" placeholder="Area's name" class="form-control input-md">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="col-md-4 control-label">Name</label>  
+          <div class="col-md-4">
+          <input ng-model="search.name" id="mane" name="name" type="text" placeholder="Name's name" class="form-control input-md">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="col-md-4 control-label">Group id</label>  
+          <div class="col-md-4">
+          <input ng-model="search.idGroup" id="idGroup" name="idGroup" type="text" placeholder="Group id" class="form-control input-md">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-4 control-label">Leader</label>  
+          <div class="col-md-4">
+          <input ng-model="search.leader" id="fax" name="leader" type="text" placeholder="leader" class="form-control input-md">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="col-md-4 control-label">Phone</label>  
+          <div class="col-md-4">
+          <input ng-model="search.phone" id="web" name="web" type="text" placeholder="Phone number" class="form-control input-md">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="col-md-4 control-label">Components</label>  
+          <div class="col-md-4">
+          <input ng-model="search.components" id="components" name="components" type="text" placeholder="Component's name" class="form-control input-md">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="col-md-4 control-label">Lines Of Investigation</label>  
+          <div class="col-md-4">
+          <input ng-model="search.linesOfInvestigation" id="linesOfInvestigation" name="linesOfInvestigation" type="text" placeholder="Investigation Lines" class="form-control input-md">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="col-md-4 control-label">Group Activity (SIC codes)</label>  
+          <div class="col-md-4">
+          <input ng-model="search['groupActivity-SICcodes']" id="groupAvtivity" name="Group Avtivity" type="text" placeholder="Group Activity" class="form-control input-md">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="col-md-4 control-label">Generated Technology (SIC codes)</label>  
+          <div class="col-md-4">
+          <input ng-model="search['groupActivity-SICcodes']" id="groupAvtivity" name="Group Avtivity" type="text" placeholder="Group Activity" class="form-control input-md">
+          </div>
+        </div>
+        
+        
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="submit"></label>
+          <div class="col-md-4">
+            <button id="submit" name="submit" class="btn btn-primary" ng-click="searchGroups()">Search</button>
+          </div>
+        </div>
+    </fieldset>
+</form>
+
+<div>
+    <table ng-if="groups.length > 0" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Area</th>
+                <th>Name</th>
+                <th>Group id</th>
+                <th>Leader</th>
+                <th>Phone</th>
+                <th>Components</th>
+                <th>Group Activity</th>
+                <th>Generated Technology</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr ng-repeat="area in group.scientificTechnicalArea">
+                <td>{{area.scientificTechnicalArea}}</td>
+                <td>
+                    <table>
+                        <tr ng-repeat="name in group.name">
+                            <td>{{name.name}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="id in group.idGroup">
+                            <td>{{id.idGroup}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="leader in group.leader">
+                            <td>{{leader.leader}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="phone in group.phone">
+                            <td>{{phone.phone}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="comp in group.components">
+                            <td>{{comp.components}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="line in group.linesOfInvestigation">
+                            <td>{{line.linesOfInvestigation}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="gr in group['groupActivity-SICcodes']">
+                            <td>{{gr['groupActivity-SICcodes']}}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr ng-repeat="gro in group['generatedTechnology-SICcodes']">
+                            <td>{{gr['groupActivity-SICcodes']}}</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                    <button class="btn btn-primary glyphicon glyphicon-pencil" ng-click="editGroup(group.idGroup)"></button>
+                    <button class="btn btn-info glyphicon glyphicon-user" ng-click=""></button>
+                    <button class="btn btn-danger glyphicon glyphicon-trash" ng-click="deleteGroup(group.idGroup)"></button>
+                </td>
+            </tr>
+        </tbody>
+    
+    
+    </table>
+</div>

@@ -1,0 +1,28 @@
+<html ng-app="GroupApp">
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" />
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+  
+  <link rel="stylesheet" href="/bower_components/bootstrap-sweetalert/dist/sweetalert.css">
+  <script src="/bower_components/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
+  
+  <script type="text/javascript" src="group-app.js"></script>
+  <script type="text/javascript" src="list-ctrl.js"></script>
+  <script type="text/javascript" src="edit-ctrl.js"></script>
+  <script type="text/javascript" src="create-ctrl.js"></script>
+  <script type="text/javascript" src="search-ctrl.js"></script>
+  
+  
+  <body>
+    <ul class="nav nav-tabs">
+      <li><a href="#!/">Group List</a></li>
+      <li><a href="#!/create">Create Group</a></li>
+      <li><a href="#!/search">Search Group</a></li>
+    </ul>
+    
+    <div ng-view></div>
+  </body>
+</html>

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/si1718/si1718-rgg-groups#readme",
   "dependencies": {
+    "bower": "^1.8.2",
     "express": "^4.16.2",
     "mongodb": "^2.2.33"
   }

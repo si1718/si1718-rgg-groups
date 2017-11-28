@@ -1,0 +1,83 @@
+<h2>Create a new group of investigation</h2>
+<br>
+
+<div class="table-responsive">
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Area</th> </thead>
+        <tbody>
+            <tr> <td> <input type="text" class="form-control" id="area" placeholder="aaaaa XXX"
+                           ng-model="newGroup.scientificTechnicalArea"/> </td> </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Name</th> </thead>
+        <tbody>
+            <tr> <td> <input type="text" class="form-control" id="name" placeholder="group´s name" ng-model="newGroup.name"/> </td> </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Group Id</th> </thead>
+        <tbody>
+            <tr> <td> <input type="text" class="form-control" id="name" placeholder="xxxNNN" ng-model="newGroup.idGroup"/> </td> </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Leader</th> </thead>
+        <tbody>
+            <tr> <td> <input type="text" class="form-control" id="leader" placeholder="leader´s name"
+                             ng-model="newGroup.leader"/> </td> </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Phone</th> </thead>
+        <tbody>
+            <tr> <td> <input type="text" class="form-control" id="phone" placeholder="9 numbers" ng-model="newGroup.phone"/> </td> </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Components</th> </thead>
+        <tbody>
+            <tr> <td> <label>{{newGroup.components}}</label>
+                      <input type="text" class="form-control" id="component" placeholder="component´s name" ng-model="newComponent"/>
+                      <button type="button" class="btn btn-primary" ng-click="addComponent()">Add component</button> </td> </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Lines Of Investigation</th> </thead>
+        <tbody>
+            <tr> <td> <label>{{newGroup.linesOfInvestigation}}</label>
+                      <input type="text" class="form-control" id="lineOfInvestigation" placeholder="line´s name" ng-model="newLine"/>
+                      <button type="button" class="btn btn-primary" ng-click="addLineOfInvestigation()">Add line</button> </td> </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Group Activity (SIC codes)</th> </thead>
+        <tbody>
+            <tr> <td> <label>{{newGroup['groupActivity-SICcodes']}}</label>
+                      <input type="text" class="form-control" id="groupActivity" placeholder="group activity´s name"
+                             ng-model="newActivity"/>
+                      <button type="button" class="btn btn-primary" ng-click="addActivity()">Add activity</button> </td> </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Generated Technology (SIC codes)</th> </thead>
+        <tbody>
+            <tr> <td> <label>{{newGroup['generatedTechnology-SICcodes']}}</label>
+                      <input type="text" class="form-control" id="generatedTechnology" placeholder="generated technology´s name"
+                             ng-model="newTechnology"/>
+                      <button type="button" class="btn btn-primary" ng-click="addTechnology()">Add technology</button> </td> </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="button">
+    <button type="button" class="btn btn-success" ng-click="addGroup()">Add Group</button>
+</div>
