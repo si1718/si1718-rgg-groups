@@ -3,14 +3,17 @@ var bodyParser = require("body-parser"); // Convert code js to json
 var MongoClient = require("mongodb").MongoClient; // Access module to mongodb instantiated and client created
 var ObjectID = require("mongodb").ObjectID;
 var path = require('path');
+//var cors = require('cors');
 
-var mongodbURL = "mongodb://rafar:rafar@ds159845.mlab.com:59845/si1718-rgg-groups";
+var mongodbURL = "mongodb://rafa:rafa@ds159845.mlab.com:59845/si1718-rgg-groups";
 
 var app = express();
 
 app.use(express.static(path.join(__dirname, "public"))); // public is static
 
 app.use(bodyParser.json()); // Use json middleware form the body-parser module
+
+//app.use(cors());
 
 var baseURL = "/api/v1";
 
@@ -95,7 +98,8 @@ app.post(baseURL + '/groups', function (req, res) {
 
 // GET all existing groups. Responds to the get method when the resource baseURL + '/groups' is invoked
 app.get(baseURL + '/groups', function (req, res) {
-    db.find({}).toArray((err, groups) => { // Return an array which contains all groups
+    db.find(req.query).toArray((err, groups) => { // Return an array which contains all groups
+        console.info(req.query);
         if (groups.length >= 1) {
             res.send(groups);
             console.log("INFO: All groups have been shown");
@@ -145,71 +149,6 @@ app.post(baseURL + '/groups/*', function (req, res) {
     console.log("WARNING: New POST to /groups/*, this method is not allowed");
     res.sendStatus(405);
 })
-
-
-/*Get url params*/
-app.get(baseURL + "/departments/search", function (request, response) {
-    
-    let request_area = request.query.scientificTechnicalArea;
-    let request_name = request.query.name;
-    let request_groupid = request.query.idGroup;
-    let request_leader = request.query.leader;
-    let request_phone = request.query.phone;
-    let request_components = request.query.components;
-    let request_linesOfInvestigation = request.query.linesOfInvestigation;
-    let request_groupActivity = request.query['groupActivity-SICcodes'];
-    let request_generatedTechnology = request.query['generatedTechnology-SICcodes'];
-    let req_web = request.query.web;
-    var db_query = {"$and": []};
-
-    if(request_area){
-        db_query.$and.push({"area" : {$regex : ".*"+ request_area +".*"}});
-    }
-    if(request_name){
-        db_query.$and.push({"address": {$elemMatch: {"name": {$regex: ".*"+ request_name +".*"}}}});
-    }
-    if(request_groupid){
-        db_query.$and.push({"address": {$elemMatch: {"idGroup": {$regex: ".*"+ request_groupid +".*"}}}});
-    }
-    if(request_leader){
-        db_query.$and.push({"address": {$elemMatch: {"leader": {$regex: ".*"+ request_leader +".*"}}}});
-    }
-    if(request_phone){
-        db_query.$and.push({"address": {$elemMatch: {"phone": {$regex: ".*"+ request_phone +".*"}}}});
-    }
-    if(request_components){
-        db_query.$and.push({"components": {$elemMatch: {"name": {$regex: ".*"+ request_components +".*"}}}});
-        //db_query.$and.push({"researchers": {$elemMatch: {".*": {$regex: ".*"+req_researcher+".*"}}}});
-    }
-    if(request_linesOfInvestigation){
-        db_query.$and.push({"linesOfInvestigation": {$elemMatch: {"name": {$regex: ".*"+ request_linesOfInvestigation +".*"}}}});
-        //db_query.$and.push({"researchers": {$elemMatch: {".*": {$regex: ".*"+req_researcher+".*"}}}});
-    }
-    if(request_groupActivity){
-        db_query.$and.push({"groupActivity-SICcodes": {$elemMatch: {"name": {$regex: ".*"+ request_groupActivity +".*"}}}});
-        //db_query.$and.push({"researchers": {$elemMatch: {".*": {$regex: ".*"+req_researcher+".*"}}}});
-    }
-    if(request_generatedTechnology){
-        db_query.$and.push({"generatedTechnology-SICcodes": {$elemMatch: {"name": {$regex: ".*"+ request_generatedTechnology +".*"}}}});
-        //db_query.$and.push({"researchers": {$elemMatch: {".*": {$regex: ".*"+req_researcher+".*"}}}});
-    }
-
-    console.log(db_query);
-    /*else{
-        db_query = {"researcher" : [{$regex : ".*"+req_researcher+".*"}]};
-        db_query =  {"researchers": {$elemMatch: {"school": {$regex: ".*"+req_school+".*"}}}}
-    }*/
-
-    db.find(db_query).toArray( function (err, groups) {
-        
-        if (err) {
-            response.sendStatus(500);
-            console.log("WARNING: Internal Server error");// internal server error
-        } else {
-            response.send(groups);
-        }
-    });
-});
 
 
 // GET an existing group knowing the group id
@@ -295,7 +234,7 @@ app.get(baseURL + '/groups1/:area', function (req, res) {
 })
 
 
-// Get existing groups knowing the leader
+// GET existing groups knowing the leader
 app.get(baseURL + '/groups2/:leader', function (req, res) {
     db.find({}).toArray((err, groups) => { // Return an array which contains all contacts
         if (groups.length >= 1) {
@@ -332,7 +271,7 @@ app.get(baseURL + '/groups2/:leader', function (req, res) {
 
 
 // Function that checks all update errors
-function validationUpdate(res, idLetters, phone){
+function validationUpdate(res, idLetters, idG, phone){
     var letters = 0;
         
     for (var i = 0; i < idLetters.length; i++) {
@@ -340,7 +279,7 @@ function validationUpdate(res, idLetters, phone){
             letters++;
     }
      
-    if (letters != idLetters.length) {
+    if (letters != idLetters.length || idG.substr(0, 3) != idLetters) {
         console.log("WARNING: New PUT to /groups/:idGroup without letters id or letters id incorrect in the name of the area");
         res.sendStatus(400);
     }
@@ -374,7 +313,7 @@ app.put(baseURL + '/groups/:idGroup', function (req, res) { //NO TERMINADO
                         var iniciales = updateGroup.scientificTechnicalArea.substr(updateGroup.scientificTechnicalArea.length-3, 3).toLowerCase();
                         var telephone = updateGroup.phone;
                         
-                        if (validationUpdate(res, iniciales, telephone) == 1) {
+                        if (validationUpdate(res, iniciales, idG, telephone) == 1) {
                             if (updateGroup._id && ( typeof(updateGroup._id) === 'string')) // transformation of the _id
                                 updateGroup._id = ObjectID.createFromHexString(updateGroup._id);
                             

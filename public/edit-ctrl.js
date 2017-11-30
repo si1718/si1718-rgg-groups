@@ -148,6 +148,9 @@ angular.module("GroupApp")
                             if(data.status == 500){
                                 swal("Error!", "Error editing data in the database!", "error");
                             }
+                            if(data.status == 400){
+                              swal("Error!", "The format of the data inserted is incorrect!", "error");
+                            }
                         }
                     );
                 

@@ -5,14 +5,14 @@
         <div class="form-group">
           <label class="col-md-4 control-label">Area</label>  
           <div class="col-md-4">
-          <input ng-model="search.area" id="area" name="area" type="text" placeholder="Area's name" class="form-control input-md">
+          <input ng-model="search.scientificTechnicalArea" id="scientificTechnicalArea" name="scientificTechnicalArea" type="text" placeholder="Area's name" class="form-control input-md">
           </div>
         </div>
         
         <div class="form-group">
           <label class="col-md-4 control-label">Name</label>  
           <div class="col-md-4">
-          <input ng-model="search.name" id="mane" name="name" type="text" placeholder="Name's name" class="form-control input-md">
+          <input ng-model="search.name" id="name" name="name" type="text" placeholder="Name's name" class="form-control input-md">
           </div>
         </div>
         
@@ -25,14 +25,14 @@
         <div class="form-group">
           <label class="col-md-4 control-label">Leader</label>  
           <div class="col-md-4">
-          <input ng-model="search.leader" id="fax" name="leader" type="text" placeholder="leader" class="form-control input-md">
+          <input ng-model="search.leader" id="leader" name="leader" type="text" placeholder="leader" class="form-control input-md">
           </div>
         </div>
         
         <div class="form-group">
           <label class="col-md-4 control-label">Phone</label>  
           <div class="col-md-4">
-          <input ng-model="search.phone" id="web" name="web" type="text" placeholder="Phone number" class="form-control input-md">
+          <input ng-model="search.phone" id="phone" name="phone" type="text" placeholder="Phone number" class="form-control input-md">
           </div>
         </div>
         
@@ -46,21 +46,21 @@
         <div class="form-group">
           <label class="col-md-4 control-label">Lines Of Investigation</label>  
           <div class="col-md-4">
-          <input ng-model="search.linesOfInvestigation" id="linesOfInvestigation" name="linesOfInvestigation" type="text" placeholder="Investigation Lines" class="form-control input-md">
+          <input ng-model="search.linesOfInvestigation" id="linesOfInvestigation" name="lines Of Investigation" type="text" placeholder="Investigation Lines" class="form-control input-md">
           </div>
         </div>
         
         <div class="form-group">
           <label class="col-md-4 control-label">Group Activity (SIC codes)</label>  
           <div class="col-md-4">
-          <input ng-model="search['groupActivity-SICcodes']" id="groupAvtivity" name="Group Avtivity" type="text" placeholder="Group Activity" class="form-control input-md">
+          <input ng-model="search['groupActivity-SICcodes']" id="groupActivity" name="Group Activity" type="text" placeholder="Group Activity" class="form-control input-md">
           </div>
         </div>
         
         <div class="form-group">
           <label class="col-md-4 control-label">Generated Technology (SIC codes)</label>  
           <div class="col-md-4">
-          <input ng-model="search['groupActivity-SICcodes']" id="groupAvtivity" name="Group Avtivity" type="text" placeholder="Group Activity" class="form-control input-md">
+          <input ng-model="search['generatedTechnology-SICcodes']" id="generatedTechnology" name="generated Technology" type="text" placeholder="Generated Technology" class="form-control input-md">
           </div>
         </div>
         
@@ -84,68 +84,60 @@
                 <th>Leader</th>
                 <th>Phone</th>
                 <th>Components</th>
+                <th>Lines Of Investigation</th>
                 <th>Group Activity</th>
                 <th>Generated Technology</th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
 
-            <tr ng-repeat="area in group.scientificTechnicalArea">
-                <td>{{area.scientificTechnicalArea}}</td>
+            <tr ng-repeat="group in groups">
+                <td>{{group.scientificTechnicalArea}}</td>
                 <td>
                     <table>
-                        <tr ng-repeat="name in group.name">
-                            <td>{{name.name}}</td>
-                        </tr>
+                        <td>{{group.name}}</td>
                     </table>
                 </td>
                 <td>
                     <table>
-                        <tr ng-repeat="id in group.idGroup">
-                            <td>{{id.idGroup}}</td>
-                        </tr>
+                        <td>{{group.idGroup}}</td>
                     </table>
                 </td>
                 <td>
                     <table>
-                        <tr ng-repeat="leader in group.leader">
-                            <td>{{leader.leader}}</td>
-                        </tr>
+                        <td>{{group.leader}}</td>
                     </table>
                 </td>
                 <td>
                     <table>
-                        <tr ng-repeat="phone in group.phone">
-                            <td>{{phone.phone}}</td>
-                        </tr>
+                        <td>{{group.phone}}</td>
                     </table>
                 </td>
                 <td>
                     <table>
                         <tr ng-repeat="comp in group.components">
-                            <td>{{comp.components}}</td>
+                            <td>{{comp}}</td>
                         </tr>
                     </table>
                 </td>
                 <td>
                     <table>
                         <tr ng-repeat="line in group.linesOfInvestigation">
-                            <td>{{line.linesOfInvestigation}}</td>
+                            <td>{{line}}</td>
                         </tr>
                     </table>
                 </td>
                 <td>
                     <table>
                         <tr ng-repeat="gr in group['groupActivity-SICcodes']">
-                            <td>{{gr['groupActivity-SICcodes']}}</td>
+                            <td>{{gr}}</td>
                         </tr>
                     </table>
                 </td>
                 <td>
                     <table>
                         <tr ng-repeat="gro in group['generatedTechnology-SICcodes']">
-                            <td>{{gr['groupActivity-SICcodes']}}</td>
+                            <td>{{gro}}</td>
                         </tr>
                     </table>
                 </td>

@@ -20,7 +20,9 @@
   "homepage": "https://github.com/si1718/si1718-rgg-groups#readme",
   "dependencies": {
     "bower": "^1.8.2",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
-    "mongodb": "^2.2.33"
+    "mongodb": "^2.2.33",
+    "rand-token": "^0.4.0"
   }
 }
