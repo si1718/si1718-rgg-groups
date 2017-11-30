@@ -3,17 +3,17 @@ var bodyParser = require("body-parser"); // Convert code js to json
 var MongoClient = require("mongodb").MongoClient; // Access module to mongodb instantiated and client created
 var ObjectID = require("mongodb").ObjectID;
 var path = require('path');
-//var cors = require('cors');
+var cors = require('cors');
 
 var mongodbURL = "mongodb://rafa:rafa@ds159845.mlab.com:59845/si1718-rgg-groups";
 
 var app = express();
 
+app.use(cors());
+
 app.use(express.static(path.join(__dirname, "public"))); // public is static
 
 app.use(bodyParser.json()); // Use json middleware form the body-parser module
-
-//app.use(cors());
 
 var baseURL = "/api/v1";
 
