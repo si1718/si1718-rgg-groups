@@ -1,4 +1,4 @@
-<h2>Create a new group of investigation</h2>
+<h1>Create a new group of investigation</h1>
 <br>
 
 <div class="table-responsive">
@@ -13,14 +13,16 @@
     <table class="table table-condensed table-hover" cellspacing="0">
         <thead> <th>Name</th> </thead>
         <tbody>
-            <tr> <td> <input type="text" class="form-control" id="name" placeholder="group´s name" ng-model="newGroup.name"/> </td> </tr>
+            <tr> <td> <input type="text" class="form-control" id="name" placeholder="group´s name"
+                             ng-model="newGroup.name"/> </td> </tr>
         </tbody>
     </table>
 
     <table class="table table-condensed table-hover" cellspacing="0">
         <thead> <th>Group Id</th> </thead>
         <tbody>
-            <tr> <td> <input type="text" class="form-control" id="name" placeholder="xxxNNN" ng-model="newGroup.idGroup"/> </td> </tr>
+            <tr> <td> <input type="text" class="form-control" id="name" placeholder="xxxNNN"
+                             ng-model="newGroup.idGroup"/> </td> </tr>
         </tbody>
     </table>
 
@@ -35,7 +37,8 @@
     <table class="table table-condensed table-hover" cellspacing="0">
         <thead> <th>Phone</th> </thead>
         <tbody>
-            <tr> <td> <input type="text" class="form-control" id="phone" placeholder="9 numbers" ng-model="newGroup.phone"/> </td> </tr>
+            <tr> <td> <input type="text" class="form-control" id="phone" placeholder="9 numbers"
+                             ng-model="newGroup.phone"/> </td> </tr>
         </tbody>
     </table>
 
@@ -43,7 +46,8 @@
         <thead> <th>Components</th> </thead>
         <tbody>
             <tr> <td> <label>{{newGroup.components}}</label>
-                      <input type="text" class="form-control" id="component" placeholder="component´s name" ng-model="newComponent"/>
+                      <input type="text" class="form-control" id="component" placeholder="component´s name"
+                             ng-model="newComponent"/>
                       <button type="button" class="btn btn-primary" ng-click="addComponent()">Add component</button> </td> </tr>
         </tbody>
     </table>
@@ -52,8 +56,9 @@
         <thead> <th>Lines Of Investigation</th> </thead>
         <tbody>
             <tr> <td> <label>{{newGroup.linesOfInvestigation}}</label>
-                      <input type="text" class="form-control" id="lineOfInvestigation" placeholder="line´s name" ng-model="newLine"/>
-                      <button type="button" class="btn btn-primary" ng-click="addLineOfInvestigation()">Add line</button> </td> </tr>
+                      <input type="text" class="form-control" id="lineOfInvestigation" placeholder="line´s name"
+                             ng-model="newLine"/>
+                      <button type="button" class="btn btn-primary" ng-click="addLineOfInvestigation()">Add line</button></td> </tr>
         </tbody>
     </table>
 
@@ -74,6 +79,16 @@
                       <input type="text" class="form-control" id="generatedTechnology" placeholder="generated technology´s name"
                              ng-model="newTechnology"/>
                       <button type="button" class="btn btn-primary" ng-click="addTechnology()">Add technology</button> </td> </tr>
+        </tbody>
+    </table>
+    
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Keywords</th> </thead>
+        <tbody>
+            <tr> <td> <label>{{newGroup.keywords}}</label>
+                      <input type="text" class="form-control" id="keywords" placeholder="keyword"
+                             ng-model="newKeyword"/>
+                      <button type="button" class="btn btn-primary" ng-click="addKeyword()">Add keyword</button> </td> </tr>
         </tbody>
     </table>
 </div>

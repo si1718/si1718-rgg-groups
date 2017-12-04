@@ -1,14 +1,12 @@
-<h2>Edit group : {{groupId}}</h2>
+<h1>Edit group : {{groupId}}</h1>
 <br>
 
 <div class="table-responsive">
     <table class="table table-condensed table-hover" cellspacing="0">
-        <thead> <th> Area </th> </thead>
+        <thead> <th>Area</th> </thead>
         <tbody>
             <tr> <td> <input type="text" class="form-control" id="area" ng-model="updatedGroup.scientificTechnicalArea"
                              value="{{updatedGroup.scientificTechnicalArea}}"/> </td> </tr>
-            <!---<tr><td><textarea class="form-control" id="area" ng-model="updatedGroup.scientificTechnicalArea"
-                    rows="1" value="{{updatedGroup.scientificTechnicalArea}}"></textarea></td></tr>--->
         </tbody>
     </table>
     
@@ -17,8 +15,6 @@
         <tbody>
             <tr> <td> <input type="text" class="form-control" id="name" ng-model="updatedGroup.name"
                              value="{{updatedGroup.name}}"/> </td> </tr>
-            <!---<tr><td><textarea class="form-control" id="name" ng-model="updatedGroup.name"
-                    rows="1" value="{{updatedGroup.name}}"></textarea></td></tr>--->
         </tbody>
     </table>
     
@@ -27,13 +23,28 @@
         <tbody> <tr> <td>{{updatedGroup.idGroup}}</td> </tr> </tbody>
     </table>
     
-    <table class="table table-condensed table-hover" cellspacing="0">
+    <!---<table class="table table-condensed table-hover" cellspacing="0">
         <thead><tr><th>Leader</th></tr></thead>
         <tbody>
             <tr> <td> <input type="text" class="form-control" id="leader" ng-model="updatedGroup.leader"
                              value="{{updatedGroup.leader}}"/> </td> </tr>
-            <!---<tr><td><textarea class="form-control" id="leader" ng-model="updatedGroup.leader"
-                    rows="1" value="{{updatedGroup.leader}}"></textarea></td></tr>--->
+        </tbody>
+    </table>--->
+    
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Leader:</th> <th> </th> </thead>
+        <tbody>
+            <tr> <td> <input type="text" class="form-control" ng-disabled="muestraValida == false" ng-model="updatedGroup.leaderName"/>
+                 </td>
+                 <td>
+                    <div ng-if="muestraValida == true">
+                        <button class="btn btn-success" ng-click="validateGroup()">Validate</button>
+                    </div>
+                    <div ng-if="muestraValida == false">
+                        <button class="btn btn-primary" ng-click="changeGroup()">Change</button>
+                    </div>
+                 </td>
+            </tr>
         </tbody>
     </table>
     
@@ -42,8 +53,6 @@
         <tbody>
             <tr> <td> <input type="text" class="form-control" id="phone" ng-model="updatedGroup.phone"
                              value="{{updatedGroup.phone}}"/> </td> </tr>
-            <!---<tr><td><textarea class="form-control" id="phone" ng-model="updatedGroup.phone"
-                    rows="1" value="{{updatedGroup.phone}}"></textarea></td></tr>--->
         </tbody>
     </table>
     
@@ -78,9 +87,17 @@
                     rows="3" value="{{updatedGroup['generatedTechnology-SICcodes']}}"></textarea> </td> </tr>
         </tbody>
     </table>
+    
+    <table class="table table-condensed table-hover" cellspacing="0">
+        <thead> <th>Keywords</th> </thead>
+        <tbody>
+            <tr> <td> <textarea class="form-control" id="keywords" ng-model="updatedGroup.keywords"
+                    rows="3" value="{{updatedGroup.keywords}}"></textarea> </td> </tr>
+        </tbody>
+    </table>
 </div>
 
 <div>
     <button class="btn btn-success" ng-click="editGroup()">Update</button>
-    <button class="btn btn-info" onclick="location.href='#!';">Back</button>
+    <button class="btn btn-default" onclick="location.href='#!';">Back</button>
 </div>

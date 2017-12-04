@@ -13,6 +13,12 @@ angular.module("GroupApp", ["ngRoute"]) // [] to initialize angular and import m
             }).when("/search", {
                 templateUrl : "search.html",
                 controller : "SearchCtrl"
+            }).when("/graph", {
+                templateUrl : "graph.html",
+                controller : "GraphCtrl"
+            }).when("/grants", {
+                templateUrl : "grants.html",
+                controller : "GrantCtrl"
             }
         );
         

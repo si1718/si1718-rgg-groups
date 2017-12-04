@@ -1,55 +1,131 @@
-<h2>Group List</h2>
+<h1>Group List</h1>
 <br>
-<!---<input class="form-control" id="searchInput" type="text" placeholder="Search for all fields...">
-<script>
-    $(document).ready(function () {
-        $("#searchInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#listProjectsTable tr").filter(function (){
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
-<br>--->
+
 <div class="table-responsive">
     <table class="table table-condensed table-hover" cellspacing="0">
+        <tr ng-repeat="group in groups">
+            <td>
+                <h4 class="h4" style="font-weight: bold">{{group.scientificTechnicalArea}}</h4>
+                <p> <b>Name:</b> {{group.name}}</p>
+                <p> <b>Group Id:</b> {{group.idGroup}}</p>
+                <p ng-if = "url == false"> <b>Leader:</b> {{group.leader}}</p>
+                <p ng-if = "url == true"> <b>Leader Name:</b> {{group.leaderName}}</p>
+                <p> <b>Phone:</b> {{group.phone}}</p>
+                <p> <b>Components:</b> </p>
+                    <ul> <li ng-repeat="component in group.components">{{component}}</li> </ul>
+                <p> <b>Lines Of Investigation:</b> </p>
+                    <ul> <li ng-repeat="lineInvest in group.linesOfInvestigation">{{lineInvest}}</li> </ul>
+                <p> <b>Group Activity-SICcodes:</b> </p>
+                    <ul> <li ng-repeat="groupAct in group['groupActivity-SICcodes']">{{groupAct}}</li> </ul>
+                <p> <b>Generated Technology-SICcodes:</b> </p>
+                    <ul> <li ng-repeat="genTechnology in group['generatedTechnology-SICcodes']">{{genTechnology}}</li> </ul>
+            </td>
+            
+            <td> <a class="btn btn-primary" href="#!/group/{{group.idGroup}}">Edit</button> </td>
+            
+            <td>
+                <!---Delete a group--->
+                <button type="button" class="btn btn-danger" data-toggle="modal"
+                            data-target="#deleteModal{{$id}}">Delete</button>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteModal{{$id}}" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Are you sure that you want to delete this group?</h4>
+                            </div>
+                                
+                            <div class="modal-body">
+                                <p> <strong>Area: </strong>{{group.scientificTechnicalArea}}</p>
+                                <p><strong>Name: </strong>{{group.name}}</p>
+                                <p><strong>idGroup: </strong>{{group.idGroup}}</p>
+                            </div>
+                                
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+                                <button class="btn btn-danger" ng-click="deleteGroup(group.idGroup)"
+                                        data-dismiss="modal">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </<table>
+    
+    
+    <!--- OLD CODE --->
+    <!---<table class="table table-condensed table-hover" cellspacing="0">
         <thead>
             <tr>
                 <th>Area</th>
                 <th>Name</th>
                 <th>Group id</th>
                 <th>Leader</th>
+                <th>Leader Name</th>
                 <th>Phone</th>
                 <th>Components</th>
                 <th>Lines Of Investigation</th>
                 <th>Group Activity (SIC codes)</th>
                 <th>Generated Technology (SIC codes)</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="group in groups">
                 <td>{{group.scientificTechnicalArea}}</td>
                 <td>{{group.name}}</td>
-                <td><a href="#!/group/{{group.idGroup}}">{{group.idGroup}}</a></td>
+                <td>{{group.idGroup}}</td>
                 <td>{{group.leader}}</td>
+                <td>{{group.leaderName}}</td>
                 <td>{{group.phone}}</td>
-                <td><table><tr ng-repeat="component in group.components">
+                <td> <table> <tr ng-repeat="component in group.components">
                     <td>{{component}}</td>
-                </tr></table></td>
-                <td><table><tr ng-repeat="lineInvest in group.linesOfInvestigation">
+                </tr> </table> </td>
+                <td> <table> <tr ng-repeat="lineInvest in group.linesOfInvestigation">
                     <td>{{lineInvest}}</td>
-                </tr></table></td>
-                <td><table><tr ng-repeat="groupAct in group['groupActivity-SICcodes']">
+                </tr> </table> </td>
+                <td> <table> <tr ng-repeat="groupAct in group['groupActivity-SICcodes']">
                     <td>{{groupAct}}</td>
-                </tr></table></td>
-                <td><table><tr ng-repeat="genTechnology in group['generatedTechnology-SICcodes']">
+                </tr> </table> </td>
+                <td> <table> <tr ng-repeat="genTechnology in group['generatedTechnology-SICcodes']">
                     <td>{{genTechnology}}</td>
-                </tr></table></td>
+                </tr> </table> </td>
                 <td>
-                    <button class="btn btn-danger" ng-click="deleteGroup(group.idGroup)">Delete</button>  <!---Delete a group--->
+                    <!---Delete a group--->
+                    <!---<button type="button" class="btn btn-danger" data-toggle="modal"
+                            data-target="#deleteModal{{$id}}">Delete</button>
+                    <!-- Modal -->
+                    <!---<div class="modal fade" id="deleteModal{{$id}}" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <!---<div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Are you sure that you want to delete this group?</h4>
+                                </div>
+                                
+                                <div class="modal-body">
+                                    <p> <strong>Area: </strong>{{group.scientificTechnicalArea}}</p>
+                                    <p><strong>Name: </strong>{{group.name}}</p>
+                                    <p><strong>idGroup: </strong>{{group.idGroup}}</p>
+                                </div>
+                                
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+                                    <button class="btn btn-danger" ng-click="deleteGroup(group.idGroup)"
+                                            data-dismiss="modal">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
+                <td> <a class="btn btn-primary" href="#!/group/{{group.idGroup}}">Edit</button> </td>
             </tr>
         </tbody>
-    </table>
+    </table>--->
+</div>
+
 </div>

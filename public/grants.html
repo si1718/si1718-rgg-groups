@@ -1,0 +1,24 @@
+<h1>Grant List</h1>
+<br>
+
+<div class="table-responsive">
+    <div>
+        <table class="table table-condensed table-hover" cellspacing="0">
+            <tr ng-repeat="grant in grants">
+                <td>
+                    <h4 class="h4" style="font-weight: bold">{{grant.title}}</h4>
+                    <p> <b>Reference:</b> {{grant.reference}}</p>
+                    <p> <b>Leaders:</b> </p>
+                        <ul> <li ng-repeat="leaderN in grant.leadersName">{{leaderN}}</li> </ul>
+                    <p> <b>Grant Type:</b> {{grant.type}}</p>
+                    <p> <b>Start Date:</b> {{grant.startDate}}</p>
+                    <p> <b>End Date:</b> {{grant.endDate}}</p>
+                    <p> <b>Funding Organizations:</b> </p>
+                        <ul> <li ng-repeat="funding in grant.fundingOrganizations">{{funding}}</li> </ul>
+                    <p> <b>Team:</b> </p>
+                        <ul> <li ng-repeat="teamMember in grant.teamMembersName">{{teamMember}}</li> </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

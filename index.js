@@ -99,7 +99,7 @@ app.post(baseURL + '/groups', function (req, res) {
 // GET all existing groups. Responds to the get method when the resource baseURL + '/groups' is invoked
 app.get(baseURL + '/groups', function (req, res) {
     db.find(req.query).toArray((err, groups) => { // Return an array which contains all groups
-        console.info(req.query);
+        //console.info(req.query);
         if (groups.length >= 1) {
             res.send(groups);
             console.log("INFO: All groups have been shown");

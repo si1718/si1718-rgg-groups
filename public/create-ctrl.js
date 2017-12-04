@@ -5,6 +5,7 @@ angular.module("GroupApp")
         $scope.newGroup.linesOfInvestigation = [];
         $scope.newGroup['groupActivity-SICcodes'] = [];
         $scope.newGroup['generatedTechnology-SICcodes'] = [];
+        $scope.newGroup.keywords = [];
         
         
         /**************************  START FUNCTION  *************************/
@@ -29,6 +30,9 @@ angular.module("GroupApp")
         }
         $scope.addTechnology = function () {
             $scope.newGroup['generatedTechnology-SICcodes'].push($scope.newTechnology);     
+        }
+        $scope.addKeyword = function () {
+            $scope.newGroup.keywords.push($scope.newKeyword);    
         }
         
         $scope.addGroup = function () {

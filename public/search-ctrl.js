@@ -1,15 +1,20 @@
 angular.module("GroupApp")
     .controller("SearchCtrl", ["$scope", "$http", "$window",
-        function ($scope, $http, $window) {  // app.controller("name", dependencies)
+        function ($scope, $http, $window, $location) {  // app.controller("name", dependencies)
         
         function refresh(request){
             $http
             .get("/api/v1/groups", {"params": $scope.search})
             .then(function(response){
                 $scope.groups = response.data;
+                $scope.url = false;
+                if ($scope.groups.leader.includes("https://") == true) {
+                    $scope.url = true;
+                }
             },function(data) {
                 if(data.status == 404){
-                    swal("Error!", "Groups not found!", "error");
+                    swal("Error!", "Groups not found! If you have entered something in the leader field, try entering the same in the leaderName field", "error");
+                    setTimeout('location.reload(true)', 7000);
                 }
             });
         }
@@ -54,6 +59,9 @@ angular.module("GroupApp")
             }
             if($scope.search.leader){
                 request += "&leader=" + $scope.search.leader;
+            }
+            if($scope.search.leaderName){
+                request += "&leaderName=" + $scope.search.leaderName;
             }
             if($scope.search.phone){
                 request += "&phone=" + $scope.search.phone;

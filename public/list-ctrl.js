@@ -6,6 +6,10 @@ angular.module("GroupApp")
                 .get("/api/v1/groups")
                 .then(function (response) {
                     $scope.groups = response.data;
+                    $scope.url = false;
+                    if ($scope.groups.leader.includes("https://") == true) {
+                        $scope.url = true;
+                    }
                 },function(data) {
                     if(data.status == 404){
                         swal("Error!", "There aren´t groups in the database!", "error");
