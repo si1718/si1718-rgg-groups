@@ -10,7 +10,7 @@ function writeScreenShot(data, filename) {
 describe('Data is loaded',function  (){
    it('Should show a list of more than two groups', function (){
        browser.get("http://localhost:8080"); // Load ghost navigator
-       var groups = element.all(by.repeater('group in groups')); // List of groups displayed on the virtual page
+       var groups = element.all(by.repeater('group in groups')); // List of contacts displayed on the virtual page
        browser.driver.sleep(2000);
        
        browser.takeScreenshot().then(function (png) {

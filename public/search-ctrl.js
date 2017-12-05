@@ -7,10 +7,10 @@ angular.module("GroupApp")
             .get("/api/v1/groups", {"params": $scope.search})
             .then(function(response){
                 $scope.groups = response.data;
-                $scope.url = false;
+                /*$scope.url = false;
                 if ($scope.groups.leader.includes("https://") == true) {
                     $scope.url = true;
-                }
+                }*/
             },function(data) {
                 if(data.status == 404){
                     swal("Error!", "Groups not found! If you have entered something in the leader field, try entering the same in the leaderName field", "error");
@@ -83,6 +83,8 @@ angular.module("GroupApp")
         }
         /*********************************************************************/
         
-        
+        $scope.cleanFields = function (){
+            location.reload(true);
+        }
     }
 ]);

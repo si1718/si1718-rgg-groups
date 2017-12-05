@@ -79,10 +79,12 @@
           <label class="col-md-4 control-label" for="submit"></label>
           <div class="col-md-4">
             <button id="submit" name="submit" class="btn btn-primary" ng-click="searchGroups()">Search</button>
+            <button id="submit" name="submit" class="btn btn-default" ng-click="cleanFields()">Clean Search Fields</button>
           </div>
         </div>
     </fieldset>
 </form>
+
 
 <div>
     <table ng-if="groups.length > 0" class="table table-condensed table-hover">
@@ -91,8 +93,8 @@
                 <h4 class="h4" style="font-weight: bold">{{group.scientificTechnicalArea}}</h4>
                 <p> <b>Name:</b> {{group.name}}</p>
                 <p> <b>Group Id:</b> {{group.idGroup}}</p>
-                <p ng-if = "url == false"> <b>Leader:</b> {{group.leader}}</p>
-                <p ng-if = "url == true"> <b>Leader Name:</b> {{group.leaderName}}</p>
+                <p> <b>Leader:</b> {{group.leader}}</p>
+                <p> <b>Leader Name:</b> {{group.leaderName}}</p>
                 <p> <b>Phone:</b> {{group.phone}}</p>
                 <p> <b>Components:</b> </p>
                     <ul> <li ng-repeat="component in group.components">{{component}}</li> </ul>
