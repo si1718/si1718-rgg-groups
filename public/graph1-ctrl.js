@@ -1,5 +1,5 @@
 angular.module("GroupApp")
-    .controller("GraphCtrl", ["$scope", "$http", function($scope, $http) {
+    .controller("Graph1Ctrl", ["$scope", "$http", function($scope, $http) {
         function refresh() {
             $http
                 .get("/api/v1/groups")
@@ -96,7 +96,7 @@ angular.module("GroupApp")
                             type: 'pie'
                         },
                         title: {
-                            text: 'Distribution of components in the research areas'
+                            text: 'Distribution of components (researchers) in the research areas'
                         },
                         tooltip: {
                             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

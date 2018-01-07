@@ -18,12 +18,14 @@ app.use(bodyParser.json()); // Use json middleware form the body-parser module
 var baseURL = "/api/v1";
 
 var db;
+var dbChartsData;
 
 // Connect to mongodbURL and return the database
 MongoClient.connect(mongodbURL, {native_parser:true}, (err, database) => {
     db = database.collection("groups");
+    dbChartsData = database.collection("chartsData");
     if (err) throw err;
-    console.log("INFO: Database obtained");
+    console.log("INFO: Database and collections obtained");
 });
 
 
@@ -110,6 +112,25 @@ app.get(baseURL + '/groups', function (req, res) {
         }
         else{
             console.log("WARNING: New GET to /groups and no groups was found in the database");
+            res.sendStatus(404);
+        }
+    });
+})
+
+
+// GET all existing data of charts. Responds to the get method when the resource baseURL + '/chartsData' is invoked
+app.get(baseURL + '/chartsData', function (req, res) {
+    dbChartsData.find().toArray((err, chartsData) => { // Return an array which contains all groups
+        if (chartsData.length >= 1) {
+            res.send(chartsData);
+            console.log("INFO: All data of charts have been shown");
+        }
+        else if (err) {
+            console.error('WARNING: Error getting data from the database');
+            res.sendStatus(500);
+        }
+        else{
+            console.log("WARNING: New GET to /chartsData and no data of charts was found in the database");
             res.sendStatus(404);
         }
     });
@@ -264,6 +285,70 @@ app.get(baseURL + '/groups2/:leader', function (req, res) {
         }
         else{
             console.log("WARNING: New GET to /groups2/:leader with nonexistent groups in the database");
+            res.sendStatus(404);
+        }
+    });
+})
+
+
+// GET an existing chartData knowing the creationDate
+app.get(baseURL + '/chartsData/:creationDate', function (req, res) {
+    dbChartsData.find({}).toArray((err, chartsData) => { // Return an array which contains all contacts
+        if (chartsData.length >= 1) {
+            var date = req.params.creationDate;
+            
+            var filteredCharts = chartsData.filter((d) => {
+                return (d.creationDate == date);
+            });
+            
+            if (filteredCharts.length >= 1) {
+                console.log(filteredCharts);
+                res.send(filteredCharts);
+                console.log("INFO: The data whose creation date was " + date + " have been shown");
+            }
+            else{
+                console.log("WARNING: New GET to /chartsData/:creationDate with nonexistent date of creation");
+                res.sendStatus(404);
+            }
+        }
+        else if (err) {
+            console.error('WARNING: Error getting data from the database');
+            res.sendStatus(500);
+        }
+        else{
+            console.log("WARNING: New GET to /chartsData/:creationDate and no data was found in the database");
+            res.sendStatus(404);
+        }
+    });
+})
+
+
+// GET an existing chartData knowing the creationDate
+app.get(baseURL + '/chartsData1/:month', function (req, res) {
+    dbChartsData.find({}).toArray((err, chartsData) => { // Return an array which contains all contacts
+        if (chartsData.length >= 1) {
+            var paramMonth = req.params.month;
+            
+            var filteredCharts = chartsData.filter((d) => {
+                return (d.creationDate.split("-")[1] == paramMonth);
+            });
+            
+            if (filteredCharts.length >= 1) {
+                console.log(filteredCharts);
+                res.send(filteredCharts);
+                console.log("INFO: The data whose month was " + paramMonth + " have been shown");
+            }
+            else{
+                console.log("WARNING: New GET to /chartsData1/:month with nonexistent paramMonth");
+                res.sendStatus(404);
+            }
+        }
+        else if (err) {
+            console.error('WARNING: Error getting data from the database');
+            res.sendStatus(500);
+        }
+        else{
+            console.log("WARNING: New GET to /chartsData1/:month and no data was found in the database");
             res.sendStatus(404);
         }
     });
