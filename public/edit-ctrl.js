@@ -16,6 +16,7 @@ angular.module("GroupApp")
                     $scope.oldGroup.keywords = $scope.oldGroup.keywords.join();
                 });
             
+            /**************************  START FUNCTION1  *************************/
             function refresh (){
                 $http
                     .get("/api/v1/groups/" + $scope.groupId)
@@ -23,7 +24,6 @@ angular.module("GroupApp")
                         $scope.updatedGroup = response.data[0];
                         
                         /***************RESEARCHERS***************/
-                        console.log("longitud:" + $scope.updatedGroup.leader);
                         if($scope.updatedGroup.leader.length > 0){
                             leader = String($scope.updatedGroup.leader);
                         }else{
@@ -49,6 +49,52 @@ angular.module("GroupApp")
                         /*****************************************/
                     });
             }
+            /**********************************************************************/
+            
+            /**************************  START FUNCTION1  *************************/
+            function refresh1 (){
+                $http
+                    .get("/api/v1/recommendations/" + $scope.groupId)
+                    .then(function (response) {
+                        $scope.recommendationsGroup = response.data;
+                        
+                        var keywordsRecommeded = $scope.recommendationsGroup[0].groupsRecommended;
+                        
+                        var idsRecomm = [];
+                        var keysRecomm = [];
+                        for (var i = 0; i < keywordsRecommeded.length; i++) {
+                            $http
+                                .get("/api/v1/groups/" + keywordsRecommeded[i])
+                                .then(function (response) {
+                                    $scope.group = response.data;
+                                    console.log("Recommendation:");
+                                    console.log($scope.group[0].idGroup);
+                                    console.log($scope.group[0].keywords);
+                                    idsRecomm.push($scope.group[0].idGroup);
+                                    keysRecomm.push($scope.group[0].keywords);
+                                },function(data) {
+                                if(data.status == 404){
+                                    swal("Error!", "There aren´t recommendations from the group in the database!", "error");
+                                }
+                            });
+                        }
+                        
+                        $scope.idsRe = idsRecomm;
+                        $scope.keysRe = keysRecomm;
+                    },function(data) {
+                    if(data.status == 404){
+                        swal("Error!", "There aren´t recommendations from the group in the database!", "error");
+                    }
+                });
+            }
+            
+            function getKeywords (){
+                for (var i = 0; i< $scope.keywordsRecommeded.length; i++){
+                    console.log($scope.keywordsRecommeded[i]);
+                }
+            }
+            /**********************************************************************/
+            
             
             $scope.validateGroup = function (){
                 delete $scope.updatedGroup._id;
@@ -102,21 +148,6 @@ angular.module("GroupApp")
                         }  
                     });
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             
             $scope.editGroup = function () {
                 delete $scope.updatedGroup._id;
@@ -286,5 +317,6 @@ angular.module("GroupApp")
                     );
             }
             refresh();
+            refresh1();
         }
     ]);

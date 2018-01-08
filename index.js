@@ -19,11 +19,13 @@ var baseURL = "/api/v1";
 
 var db;
 var dbChartsData;
+var dbRecommendations;
 
 // Connect to mongodbURL and return the database
 MongoClient.connect(mongodbURL, {native_parser:true}, (err, database) => {
     db = database.collection("groups");
     dbChartsData = database.collection("chartsData");
+    dbRecommendations = database.collection("recommendations");
     if (err) throw err;
     console.log("INFO: Database and collections obtained");
 });
@@ -349,6 +351,69 @@ app.get(baseURL + '/chartsData1/:month', function (req, res) {
         }
         else{
             console.log("WARNING: New GET to /chartsData1/:month and no data was found in the database");
+            res.sendStatus(404);
+        }
+    });
+})
+
+
+// GET an existing recommendation knowing the idGroup
+app.get(baseURL + '/recommendations/:idGroup', function (req, res) {
+    dbRecommendations.find({}).toArray((err, recommendations) => { // Return an array which contains all contacts
+        if (recommendations.length >= 1) {
+            var idGroup = req.params.idGroup;
+            
+            var filteredRecommendation = recommendations.filter((d) => {
+                return (d.idGroup == idGroup);
+            });
+            
+            if (filteredRecommendation.length >= 1) {
+                res.send(filteredRecommendation);
+                console.log("INFO: The recommendation whose idGroup was " + idGroup + " have been shown");
+            }
+            else{
+                console.log("WARNING: New GET to /recommendations/:idGroup with nonexistent idGroup");
+                res.sendStatus(404);
+            }
+        }
+        else if (err) {
+            console.error('WARNING: Error getting data from the database');
+            res.sendStatus(500);
+        }
+        else{
+            console.log("WARNING: New GET to /recommendations/:idGroup and no data was found in the database");
+            res.sendStatus(404);
+        }
+    });
+})
+
+
+// GET keywords of a group knowing the group id
+app.get(baseURL + '/recommendations1/:idGroup', function (req, res) {
+    db.find({}).toArray((err, groups) => { // Return an array which contains all groups
+        if (groups.length >= 1) {
+            var id = req.params.idGroup.toLowerCase();
+            
+            var filteredGroup = groups.filter((g) => {
+                return (g.idGroup == id);
+            });
+            
+            if (filteredGroup.length == 1) {
+                console.log(filteredGroup.keywords);
+                res.send(filteredGroup.keywords);
+                console.log("INFO: The group whose group id is " + id + " has been shown");
+            }
+            else{
+                console.log("WARNING: New GET to /recommendations1/:idGroup with a nonexistent group");
+                res.sendStatus(404);
+            }
+        }
+        else if (err) {
+            console.error('WARNING: Error getting data from the database');
+            res.sendStatus(500);
+        }
+        else{
+            console.log("WARNING: New GET to /recommendations1/:idGroup and no groups was found in the database");
             res.sendStatus(404);
         }
     });

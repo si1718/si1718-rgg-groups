@@ -1,8 +1,17 @@
-<h1>Grant List</h1>
-<br>
+<div ng-if="!grants" class="container">
+	<div class="row">
+		<h3>Obtaining data from the grants database...</h3>
+		<br>
+		<div class="loader"></div>
+	</div>
+</div>
 
-<div class="table-responsive">
-    <div>
+
+<div ng-if="grants" class="container">
+    <div class="table-responsive">
+        <h1>Grant List</h1>
+        <br>
+    
         <table class="table table-condensed table-hover" cellspacing="0">
             <tr ng-repeat="grant in grants">
                 <td>
